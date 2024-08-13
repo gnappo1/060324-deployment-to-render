@@ -26,7 +26,7 @@ function ProductionDetail() {
   }, [projectId])
 
   const handleDelete = () => {
-    fetch(`/productions/${projectId}`, {method: "DELETE"})
+    fetch(`/api/v1/productions/${projectId}`, {method: "DELETE"})
     .then(resp => {
       if (resp.status === 204) { 
         deleteProduction(production)
