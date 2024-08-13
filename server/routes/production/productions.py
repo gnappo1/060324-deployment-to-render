@@ -1,4 +1,11 @@
-from routes.__init__ import Resource, request, db, make_response, login_required
+from routes.__init__ import (
+    Resource,
+    request,
+    db,
+    make_response,
+    login_required,
+    session,
+)
 from models.production import Production
 # from sqlite3 import IntegrityError
 from sqlalchemy.exc import IntegrityError
@@ -20,6 +27,7 @@ class Productions(Resource):
                 request.get_json()
             )  #! you might get a 405 if content type has not been set
             prod = Production(**data)  #! model validations kick in at this point
+            prod.user_id = session["user_id"]
             db.session.add(prod)
             db.session.commit()  #! database constraints kick in
             return prod.to_dict(rules=("crew_members",)), 201
